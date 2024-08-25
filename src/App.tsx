@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks';
 import { login } from './features/auth/authSlice';
+import Register from './pages/Register';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
       </Routes>
     </main>
   );

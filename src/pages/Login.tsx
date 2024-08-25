@@ -30,22 +30,26 @@ export default function Login() {
               Welcome Back, please login to your accout to continue
             </h2>
             <div className="mt-8 flex flex-col">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" className="text-primary italic">
+                Email
+              </label>
               <Field
                 name="email"
                 id="email"
-                className="focus:outline-none border-b-2"
+                className="focus:outline-none py-2 ps-2 border-b-2 bg-purple-100 border-purple-600"
               />
               {errors.email && touched.email ? (
                 <div className="text-red-600 text-xs">{errors.email}</div>
               ) : null}
             </div>
             <div className="mt-8 flex flex-col">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password" className="text-primary italic">
+                Password
+              </label>
               <Field
                 name="password"
                 id="password"
-                className="focus:outline-none border-b-2"
+                className="focus:outline-none py-2 ps-2 border-b-2 bg-purple-100 border-purple-600"
               />
               {errors.password && touched.password ? (
                 <div className="text-red-600 text-xs">{errors.password}</div>
