@@ -1,28 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { useEffect } from 'react';
-import { useAppDispatch } from './hooks';
-import { login } from './features/auth/authSlice';
 import Register from './pages/Register';
+import { useAppSelector } from './hooks';
 
 export default function App() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { token } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    const authenticate = () => {
-      if (localStorage.getItem('token')) {
-        dispatch(login());
-      } else {
-        navigate('/auth/login');
-      }
-    };
-    authenticate();
-  }, []);
+    if (!token) {
+      navigate('/auth/login');
+    }
+  }, [token]);
 
   return (
     <main>
+      <ToastContainer />
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />

@@ -18,8 +18,7 @@ export const loginUser = createAsyncThunk<
     }
     return response;
   } catch (error: any) {
-    console.error(error);
-    return rejectWithValue('Failed to login');
+    return rejectWithValue(error.response.data.message);
   }
 });
 
@@ -35,7 +34,6 @@ export const registerUser = createAsyncThunk<
     }
     return response;
   } catch (error: any) {
-    console.log(error);
-    return rejectWithValue('Failed to register');
+    return rejectWithValue(error.response.data.message);
   }
 });

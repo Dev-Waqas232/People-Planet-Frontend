@@ -1,9 +1,43 @@
 import { Formik, Field, Form } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { registerUser } from '../features/auth/authActions';
+import { toast } from 'react-toastify';
 
 export default function Register() {
-  const registerSchema = Yup.object().shape({});
+  const { loading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const minAgeLimit = 10;
+
+  const registerSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .required('First Name must contain at least 3 character')
+      .min(3, 'First Name must contain at least 3 character'),
+    lastName: Yup.string()
+      .required('Last Name must contain at least 3 character')
+      .min(3, 'Last Name must contain at least 3 character'),
+    email: Yup.string()
+      .email('Please Enter a valid Email')
+      .required('Please Enter a valid Email'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters'),
+    c_password: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
+    dob: Yup.date()
+      .required('Date of Birth is required')
+      .max(
+        new Date(
+          new Date().setFullYear(new Date().getFullYear() - minAgeLimit)
+        ),
+        `You must be at least ${minAgeLimit} years old`
+      )
+      .typeError('Date of Birth must be a valid date'),
+  });
 
   return (
     <div className="pt-8">
@@ -17,7 +51,21 @@ export default function Register() {
           c_password: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values) => {
+          const result = await dispatch(
+            registerUser({
+              firstName: values.firstName,
+              lastName: values.lastName,
+              dob: new Date(values.dob),
+              email: values.email,
+              password: values.password,
+            })
+          );
+          if (registerUser.fulfilled.match(result)) {
+            toast.success('Account Created!');
+            navigate('/auth/login');
+          }
+        }}
       >
         {({ errors, touched }) => (
           <Form
@@ -121,10 +169,11 @@ export default function Register() {
             </div>
             <div className="w-full flex flex-col justify-center items-center mt-8">
               <button
+                disabled={loading}
                 type="submit"
                 className="bg-primary w-full text-white px-8 py-2 rounded-md"
               >
-                Register
+                {loading ? 'Please wait...' : 'Register'}
               </button>
               <Link to="/auth/login" className="mt-4 text-sm">
                 Already have an account?{' '}

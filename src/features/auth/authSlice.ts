@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from './authActions';
 import { ApiResponse, AuthResponse, User } from '../../api/types';
+import { toast } from 'react-toastify';
 
 interface AuthState {
   user: User | null;
@@ -10,8 +11,12 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user') as string)
+    : null,
+  token: localStorage.getItem('token')
+    ? JSON.parse(localStorage.getItem('token') as string)
+    : null,
   loading: false,
   error: null,
 };
@@ -57,6 +62,7 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        toast.error(state.error);
       })
       .addCase(registerUser.pending, (state) => {
         state.error = null;
@@ -68,6 +74,7 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        toast.error(state.error);
       });
   },
 });

@@ -1,8 +1,15 @@
 import { Field, Form, Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { loginUser } from '../features/auth/authActions';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { toast } from 'react-toastify';
 
 export default function Login() {
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
+
   const loginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid Email').required('Invalid Email'),
     password: Yup.string().required('Invalid Password'),
@@ -16,7 +23,17 @@ export default function Login() {
           password: '',
         }}
         validationSchema={loginSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values) => {
+          const credentials = {
+            email: values.email,
+            password: values.password,
+          };
+          const result = await dispatch(loginUser(credentials));
+          if (loginUser.fulfilled.match(result)) {
+            toast.success('Login Successfully');
+            navigate('/');
+          }
+        }}
       >
         {({ errors, touched }) => (
           <Form
@@ -57,10 +74,11 @@ export default function Login() {
             </div>
             <div className="w-full flex flex-col justify-center items-center mt-8">
               <button
+                disabled={loading}
                 type="submit"
                 className="bg-primary w-full text-white px-8 py-2 rounded-md"
               >
-                Login
+                {loading ? 'Please wait...' : 'Login'}
               </button>
               <Link to="/auth/register" className="mt-4 text-sm">
                 Don't have an account?{' '}
