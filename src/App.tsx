@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import { useEffect } from 'react';
 import Register from './pages/Register';
 import { useAppSelector } from './hooks';
+import UserProfile from './pages/UserProfile';
 
 export default function App() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function App() {
         <Route index path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/user/:userId" element={<UserProfile />} />
       </Routes>
     </main>
   );
