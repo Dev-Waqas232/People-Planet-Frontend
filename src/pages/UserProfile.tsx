@@ -15,18 +15,18 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <div className="px-8 flex">
+    <div className="px-8 md:flex">
       {/* User Profile */}
-      <div className="w-1/4 flex flex-col bg-white px-8 py-8 my-12 gap-6">
+      <div className="md:w-4/12 w-full flex flex-col bg-white px-4 py-8 my-12 gap-6">
         <div className="flex justify-center items-center">
           <img
-            className="w-3/4 rounded-full"
+            className="w-4/6 rounded-full"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s"
             alt=""
           />
         </div>
         <div>
-          <h2 className="text-3xl font-primary text-center">
+          <h2 className="text-2xl font-primary text-center">
             {' '}
             {user?.firstName} {user?.lastName}{' '}
           </h2>
