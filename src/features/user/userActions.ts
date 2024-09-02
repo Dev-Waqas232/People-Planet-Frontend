@@ -12,6 +12,7 @@ export const getUser = createAsyncThunk<
 >('user/getUser', async (profileId, { rejectWithValue }) => {
   try {
     const response = await getUserApi(profileId);
+    console.log(response);
     if (!response.ok) {
       return rejectWithValue(response.message);
     }

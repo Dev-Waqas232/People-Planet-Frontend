@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import Register from './pages/Register';
 import { useAppSelector } from './hooks';
 import UserProfile from './pages/UserProfile';
+import ProtectedRoute from './components/ProtectedRoutes';
 
 export default function App() {
   const navigate = useNavigate();
@@ -24,10 +25,12 @@ export default function App() {
     <main>
       <ToastContainer />
       <Routes>
-        <Route index path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/user/:profileId" element={<UserProfile />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/user/:profileId" element={<UserProfile />} />
+        </Route>
       </Routes>
     </main>
   );
