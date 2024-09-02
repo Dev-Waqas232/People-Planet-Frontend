@@ -13,4 +13,8 @@
 body {
   background-color: #eee;
   font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+.custom-shadow-top {
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
 }
