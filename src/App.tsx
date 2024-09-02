@@ -27,7 +27,7 @@ export default function App() {
         <Route index path="/" element={<Home />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/user/:userId" element={<UserProfile />} />
+        <Route path="/user/:profileId" element={<UserProfile />} />
       </Routes>
     </main>
   );

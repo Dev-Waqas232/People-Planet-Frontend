@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUser } from './userActions';
+import { getUser, updateUser } from './userActions';
 import { ApiResponse, User } from '../../api/types';
+import { toast } from 'react-toastify';
 
 interface UserState {
   user: User | null;
@@ -29,7 +30,7 @@ const userSlice = createSlice({
       .addCase(
         getUser.fulfilled,
         (state, action: PayloadAction<ApiResponse<User>>) => {
-          state.loading = true;
+          state.loading = false;
           state.user = action.payload.data!;
           localStorage.setItem('user', JSON.stringify(state.user));
         }
@@ -37,6 +38,23 @@ const userSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        updateUser.fulfilled,
+        (state, action: PayloadAction<ApiResponse<User>>) => {
+          state.loading = false;
+          state.user = action.payload.data!;
+          localStorage.setItem('user', JSON.stringify(state.user));
+        }
+      )
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        toast.error(state.error);
       });
   },
 });

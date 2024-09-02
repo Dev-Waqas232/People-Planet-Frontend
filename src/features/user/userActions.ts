@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiResponse, User } from '../../api/types';
-import { getUser as getUserApi } from '../../api/userApi';
+import {
+  getUser as getUserApi,
+  updateUser as updateUserApi,
+} from '../../api/userApi';
 
 export const getUser = createAsyncThunk<
   ApiResponse<User>,
@@ -12,6 +15,19 @@ export const getUser = createAsyncThunk<
     if (!response.ok) {
       return rejectWithValue(response.message);
     }
+    return response;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updateUser = createAsyncThunk<
+  ApiResponse<User>,
+  { profileId: string; data: User },
+  { rejectValue: string }
+>('user/updateUser', async ({ profileId, data }, { rejectWithValue }) => {
+  try {
+    const response = await updateUserApi(profileId, data);
     return response;
   } catch (error: any) {
     return rejectWithValue(error.response.data.message);

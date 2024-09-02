@@ -5,7 +5,16 @@ export const getUser = async (
   profileId: string
 ): Promise<ApiResponse<User>> => {
   const response = await axiosInstance.get<ApiResponse<User>>(
-    `http://localhost:5000/api/users/${profileId}`
+    `/users/${profileId}`
   );
+  return response.data;
+};
+
+export const updateUser = async (
+  profileId: string,
+  data: User
+): Promise<ApiResponse<User>> => {
+  const response = await axiosInstance.put(`/users/${profileId}`, data);
+
   return response.data;
 };
