@@ -25,12 +25,23 @@ export default function UserProfile() {
     dispatch(getUser(userId._id));
   }, []);
 
+  const formatDate = (date: Date | undefined) => {
+    const newDate = new Date(date!);
+    const formattedDate = newDate?.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    console.log(formattedDate);
+    return formattedDate;
+  };
+
   return (
     <>
       {modalOpen && <UpdateProfileModal closeModal={handleModalClose} />}
       <div className="px-8 md:flex">
         {/* User Profile */}
-        <div className="md:w-4/12 w-full flex flex-col bg-white px-4 py-8 my-12 gap-6">
+        <div className="lg:w-1/4 md:w-2/6 w-full flex flex-col bg-white px-4 py-8 my-12 gap-6">
           <div className="flex justify-center items-center">
             <img
               className="w-4/6 rounded-full"
@@ -47,11 +58,11 @@ export default function UserProfile() {
             <div className="mt-4">
               <p className="flex items-center gap-1">
                 <FaRegCalendarAlt />
-                <span>Born at {}</span>
+                <span>Born at {formatDate(user?.dob)}</span>
               </p>
               <p className="flex items-center gap-1">
                 <CiMail />
-                <span>{user?.email}</span>
+                <span className="flex-shrink truncate">{user?.email}</span>
               </p>
             </div>
 
