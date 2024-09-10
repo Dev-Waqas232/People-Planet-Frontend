@@ -18,3 +18,20 @@ export const updateUser = async (
 
   return response.data;
 };
+
+export const requestResetPassword = async (
+  email: string
+): Promise<ApiResponse<User>> => {
+  const response = await axiosInstance.post('/users/auth/request-reset', {
+    email,
+  });
+  return response.data;
+};
+
+export const resetPassword = async (data: {
+  password: string;
+  token: string;
+}): Promise<ApiResponse<User>> => {
+  const response = await axiosInstance.post('/users/auth/reset-password', data);
+  return response.data;
+};

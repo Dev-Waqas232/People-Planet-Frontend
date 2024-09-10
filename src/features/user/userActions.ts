@@ -3,6 +3,8 @@ import { ApiResponse, User } from '../../api/types';
 import {
   getUser as getUserApi,
   updateUser as updateUserApi,
+  requestResetPassword as requestResetApi,
+  resetPassword as resetPasswordApi,
 } from '../../api/userApi';
 
 export const getUser = createAsyncThunk<
@@ -29,6 +31,32 @@ export const updateUser = createAsyncThunk<
 >('user/updateUser', async ({ profileId, data }, { rejectWithValue }) => {
   try {
     const response = await updateUserApi(profileId, data);
+    return response;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.message);
+  }
+});
+
+export const requestResetPassword = createAsyncThunk<
+  ApiResponse<User>,
+  string,
+  { rejectValue: string }
+>('user/requestResetPassword', async (email, { rejectWithValue }) => {
+  try {
+    const response = await requestResetApi(email);
+    return response;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.message);
+  }
+});
+
+export const resetPassword = createAsyncThunk<
+  ApiResponse<User>,
+  { password: string; token: string },
+  { rejectValue: string }
+>('user/resetPassword', async ({ password, token }, { rejectWithValue }) => {
+  try {
+    const response = await resetPasswordApi({ password, token });
     return response;
   } catch (error: any) {
     return rejectWithValue(error.response.data.message);

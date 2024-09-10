@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUser, updateUser } from './userActions';
+import {
+  getUser,
+  requestResetPassword,
+  resetPassword,
+  updateUser,
+} from './userActions';
 import { ApiResponse, User } from '../../api/types';
 import { toast } from 'react-toastify';
 
@@ -55,6 +60,29 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
         toast.error(state.error);
+      })
+      .addCase(requestResetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(requestResetPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(requestResetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        toast.error(state.error);
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

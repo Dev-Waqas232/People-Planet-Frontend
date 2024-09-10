@@ -1,18 +1,16 @@
 import { Field, Form, Formik } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { loginUser } from '../features/auth/authActions';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { toast } from 'react-toastify';
+import { requestResetPassword } from '../features/user/userActions';
 
-export default function Login() {
+export default function RequestResetPassword() {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.auth);
+  const { loading } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const loginSchema = Yup.object().shape({
+  const getEmail = Yup.object().shape({
     email: Yup.string().email('Invalid Email').required('Invalid Email'),
-    password: Yup.string().required('Invalid Password'),
   });
 
   return (
@@ -20,18 +18,12 @@ export default function Login() {
       <Formik
         initialValues={{
           email: '',
-          password: '',
         }}
-        validationSchema={loginSchema}
+        validationSchema={getEmail}
         onSubmit={async (values) => {
-          const credentials = {
-            email: values.email,
-            password: values.password,
-          };
-          const result = await dispatch(loginUser(credentials));
-          if (loginUser.fulfilled.match(result)) {
-            toast.success('Login Successfully');
-            navigate('/');
+          const response = await dispatch(requestResetPassword(values.email));
+          if (requestResetPassword.fulfilled.match(response)) {
+            navigate('/reset-password', { state: values.email });
           }
         }}
       >
@@ -44,7 +36,7 @@ export default function Login() {
               PeoplePlanet
             </h1>
             <h2 className="font-secondary text-sm text-gray-500 text-center leading-none mt-2">
-              Welcome Back, please login to your accout to continue
+              Please enter your email to reset the password
             </h2>
             <div className="mt-8 flex flex-col">
               <label htmlFor="email" className="text-primary italic">
@@ -59,36 +51,15 @@ export default function Login() {
                 <div className="text-red-600 text-xs">{errors.email}</div>
               ) : null}
             </div>
-            <div className="mt-8 flex flex-col">
-              <label htmlFor="password" className="text-primary italic">
-                Password
-              </label>
-              <Field
-                name="password"
-                id="password"
-                className="focus:outline-none py-2 ps-2 border-b-2 bg-purple-100 border-purple-600"
-              />
-              {errors.password && touched.password ? (
-                <div className="text-red-600 text-xs">{errors.password}</div>
-              ) : null}
-            </div>
-            <div>
-              <Link to="/request-reset" className="mt-4 text-sm">
-                Forget Password?
-              </Link>
-            </div>
+
             <div className="w-full flex flex-col justify-center items-center mt-8">
               <button
                 disabled={loading}
                 type="submit"
                 className="bg-primary w-full text-white px-8 py-2 rounded-md"
               >
-                {loading ? 'Please wait...' : 'Login'}
+                {loading ? 'Please wait...' : 'Reset Password'}
               </button>
-              <Link to="/auth/register" className="mt-4 text-sm">
-                Don't have an account?{' '}
-                <span className="text-primary underline">Register Now</span>{' '}
-              </Link>
             </div>
           </Form>
         )}
