@@ -12,6 +12,8 @@ import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
 import NewPassword from './pages/NewPassword';
 
+// TODO change password field types
+
 export default function App() {
   const location = useLocation();
 
