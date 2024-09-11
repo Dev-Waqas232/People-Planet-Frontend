@@ -19,6 +19,15 @@ export const updateUser = async (
   return response.data;
 };
 
+export const changleProfilePic = async (
+  formData: FormData,
+  profileId: string
+): Promise<ApiResponse<User>> => {
+  const response = await axiosInstance.put(`/users/${profileId}`, formData);
+
+  return response.data;
+};
+
 export const requestResetPassword = async (
   email: string
 ): Promise<ApiResponse<User>> => {

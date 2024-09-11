@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  changleProfilePic,
   getUser,
   requestResetPassword,
   resetPassword,
@@ -83,6 +84,23 @@ const userSlice = createSlice({
       .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(changleProfilePic.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        changleProfilePic.fulfilled,
+        (state, action: PayloadAction<ApiResponse<User>>) => {
+          state.loading = false;
+          state.user = action.payload.data!;
+          localStorage.setItem('user', JSON.stringify(state.user));
+        }
+      )
+      .addCase(changleProfilePic.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        toast.error(state.error);
       });
   },
 });

@@ -5,6 +5,7 @@ import {
   updateUser as updateUserApi,
   requestResetPassword as requestResetApi,
   resetPassword as resetPasswordApi,
+  changleProfilePic as profilePicApi,
 } from '../../api/userApi';
 
 export const getUser = createAsyncThunk<
@@ -57,6 +58,19 @@ export const resetPassword = createAsyncThunk<
 >('user/resetPassword', async ({ password, token }, { rejectWithValue }) => {
   try {
     const response = await resetPasswordApi({ password, token });
+    return response;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.message);
+  }
+});
+
+export const changleProfilePic = createAsyncThunk<
+  ApiResponse<User>,
+  { profileId: string; formData: FormData },
+  { rejectValue: string }
+>('user/profilePic', async ({ profileId, formData }, { rejectWithValue }) => {
+  try {
+    const response = await profilePicApi(formData, profileId);
     return response;
   } catch (error: any) {
     return rejectWithValue(error.response.data.message);

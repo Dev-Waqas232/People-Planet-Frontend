@@ -5,6 +5,8 @@ import { CiMail } from 'react-icons/ci';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getUser } from '../features/user/userActions';
 import UpdateProfileModal from '../components/UpdateProfileModal';
+import { IoMdCamera } from 'react-icons/io';
+import ChangeProfilePicModal from '../components/ChangeProfilePicModal';
 
 export default function UserProfile() {
   const dispatch = useAppDispatch();
@@ -12,6 +14,7 @@ export default function UserProfile() {
   const { user } = useAppSelector((state) => state.user);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [profilePicModal, setProfilePicModal] = useState(false);
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -19,6 +22,14 @@ export default function UserProfile() {
 
   const handleModalClose = () => {
     setModalOpen(false);
+  };
+
+  const handlePicModalOpen = () => {
+    setProfilePicModal(true);
+  };
+
+  const handlePicModalClose = () => {
+    setProfilePicModal(false);
   };
 
   useEffect(() => {
@@ -39,15 +50,28 @@ export default function UserProfile() {
   return (
     <>
       {modalOpen && <UpdateProfileModal closeModal={handleModalClose} />}
+      {profilePicModal && (
+        <ChangeProfilePicModal closeModal={handlePicModalClose} />
+      )}
       <div className="px-8 md:flex">
         {/* User Profile */}
         <div className="lg:w-1/4 md:w-2/6 w-full flex flex-col bg-white px-4 py-8 my-12 gap-6">
-          <div className="flex justify-center items-center">
+          <div className="relative flex justify-center items-center">
             <img
-              className="w-4/6 rounded-full"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s"
-              alt=""
+              className="h-40 w-40 rounded-full transition-opacity duration-300 ease-in-out border-2 object-center "
+              src={
+                user?.profilePicture
+                  ? `http://localhost:5000/uploads/${user.profilePicture}`
+                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
+              }
+              alt="Profile Picture"
             />
+            <div
+              className="absolute flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 ease-in-out hover:opacity-100 rounded-full h-40 w-40 h-full cursor-pointer"
+              onClick={handlePicModalOpen}
+            >
+              <IoMdCamera className="text-4xl text-white" />
+            </div>
           </div>
           <div>
             <h2 className="text-2xl font-primary text-center">

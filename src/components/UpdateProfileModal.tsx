@@ -88,9 +88,7 @@ export default function UpdateProfileModal({
                 PeoplePlanet
               </h1>
               <h2 className="font-secondary text-sm text-gray-500 text-center leading-none mt-2">
-                Welcome to{' '}
-                <span className="italic text-primary">PeoplePlanet</span>,
-                please create an accout to continue
+                Please enter information to update
               </h2>
               <div className="w-full grid grid-cols-2">
                 <div className="mt-4 flex flex-col pe-4">
