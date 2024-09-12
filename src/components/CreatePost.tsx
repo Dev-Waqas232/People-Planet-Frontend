@@ -1,6 +1,10 @@
 import { useAppSelector } from '../hooks';
 
-export default function CreatePost() {
+type CreatePostProps = {
+  onClick: () => void;
+};
+
+export default function CreatePost({ onClick }: CreatePostProps) {
   const { user } = useAppSelector((state) => state.user);
 
   return (
@@ -17,8 +21,13 @@ export default function CreatePost() {
             alt="Profile Picture"
           />
         </div>
-        <div className="bg-gray-200  w-[90%] rounded-full cursor-pointer flex px-6 items-center">
-          <p className="text-gray-600">What's on your mind ?</p>
+        <div
+          className="bg-gray-200 hover:bg-gray-300 transition-colors  w-[90%] rounded-full cursor-pointer flex px-6 items-center"
+          onClick={onClick}
+        >
+          <p className="text-gray-600">
+            What's on your mind, {user?.firstName} ?
+          </p>
         </div>
       </div>
     </div>
