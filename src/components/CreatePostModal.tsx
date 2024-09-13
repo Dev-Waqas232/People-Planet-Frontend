@@ -1,16 +1,18 @@
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { CiImageOn } from 'react-icons/ci';
 import { FormEvent, useState } from 'react';
+import { createPost } from '../features/posts/postActions';
 
 type CreatePostModalProps = {
   closeModal: () => void;
 };
 
 export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
-  const loading = false;
+  const { loading } = useAppSelector((state) => state.posts);
   const { user } = useAppSelector((state) => state.user);
   const [postImage, setPostImage] = useState<File | null>(null);
   const [content, setContent] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -32,7 +34,8 @@ export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
       formData.append('image', postImage);
     }
 
-    console.log(formData);
+    dispatch(createPost(formData));
+    closeModal();
   };
 
   return (

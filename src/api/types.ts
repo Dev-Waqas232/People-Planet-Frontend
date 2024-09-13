@@ -18,3 +18,15 @@ export interface AuthResponse {
   token: string;
   user: User;
 }
+
+export interface PostResponse {
+  post: Post[];
+}
+
+export interface Post {
+  content: string;
+  image: string;
+  createdBy: string;
+  likes: number;
+  createdAt: Date;
+}
