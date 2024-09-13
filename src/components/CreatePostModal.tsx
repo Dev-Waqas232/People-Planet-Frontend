@@ -1,6 +1,6 @@
 import { useAppSelector } from '../hooks';
 import { CiImageOn } from 'react-icons/ci';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 type CreatePostModalProps = {
   closeModal: () => void;
@@ -9,15 +9,30 @@ type CreatePostModalProps = {
 export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
   const loading = false;
   const { user } = useAppSelector((state) => state.user);
-  const [profilePic, setProfilePic] = useState<File | null>(null);
+  const [postImage, setPostImage] = useState<File | null>(null);
+  const [content, setContent] = useState('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setProfilePic(file);
+    setPostImage(file);
   };
 
   const handleIconClick = () => {
     document.getElementById('fileInput')!.click();
+  };
+
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('content', content);
+    if (user?._id) {
+      formData.append('createdBy', user._id);
+    }
+    if (postImage) {
+      formData.append('image', postImage);
+    }
+
+    console.log(formData);
   };
 
   return (
@@ -27,17 +42,19 @@ export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
         className="fixed top-0 left-0 w-full h-screen bg-black opacity-70 z-40"
       />
       <div className="relative bg-white rounded-md shadow-lg z-50 w-[90%] lg:w-2/5 md:w-2/4 max-h-[90vh] overflow-y-auto">
-        <form className="px-8 py-8">
+        <form className="px-8 py-8" onSubmit={handleFormSubmit}>
           <h1 className="text-2xl font-primary font-semibold text-center text-primary">
             Create Post
           </h1>
 
           <div className="mt-4 flex flex-col">
             <textarea
-              className="focus:outline-none text-xl"
+              className={`focus:outline-none ${
+                content.length > 100 ? 'text-base' : 'text-xl'
+              }`}
               rows={7}
-              name=""
-              id=""
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               placeholder={`  What's on your mind, ${user?.firstName} ?`}
             ></textarea>
           </div>
@@ -65,9 +82,9 @@ export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
           </div>
           <div className="w-full flex flex-col justify-center items-center mt-4">
             <button
-              disabled={loading}
+              disabled={loading || content.length <= 0}
               type="submit"
-              className="bg-primary w-full text-white px-8 py-2 rounded-md"
+              className="bg-primary disabled:bg-gray-300 w-full text-white px-8 py-2 rounded-md"
             >
               {loading ? 'Please wait...' : 'Post'}
             </button>
