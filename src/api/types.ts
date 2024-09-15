@@ -24,9 +24,16 @@ export interface PostResponse {
 }
 
 export interface Post {
+  _id: string;
   content: string;
   image: string;
-  createdBy: string;
-  likes: number;
+  createdBy: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    profilePicture: string | null;
+  };
+  likes: string[];
   createdAt: Date;
+  comments: string[];
 }

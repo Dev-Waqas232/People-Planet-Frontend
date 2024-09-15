@@ -31,6 +31,7 @@ export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
       formData.append('createdBy', user._id);
     }
     if (postImage) {
+      console.log(postImage);
       formData.append('image', postImage);
     }
 
@@ -45,7 +46,11 @@ export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
         className="fixed top-0 left-0 w-full h-screen bg-black opacity-70 z-40"
       />
       <div className="relative bg-white rounded-md shadow-lg z-50 w-[90%] lg:w-2/5 md:w-2/4 max-h-[90vh] overflow-y-auto">
-        <form className="px-8 py-8" onSubmit={handleFormSubmit}>
+        <form
+          className="px-8 py-8"
+          onSubmit={handleFormSubmit}
+          encType="multipart/form-data"
+        >
           <h1 className="text-2xl font-primary font-semibold text-center text-primary">
             Create Post
           </h1>

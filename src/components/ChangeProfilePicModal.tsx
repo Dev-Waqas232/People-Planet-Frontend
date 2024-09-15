@@ -28,6 +28,7 @@ export default function ChangeProfilePicModal({
   ) => {
     const file = e.target.files ? e.target.files[0] : null;
     setProfilePic(file);
+    console.log(file);
     setFieldValue('profilePic', file);
   };
 

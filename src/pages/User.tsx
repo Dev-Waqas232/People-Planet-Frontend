@@ -7,6 +7,8 @@ import ChangeProfilePicModal from '../components/ChangeProfilePicModal';
 import UserProfile from '../components/UserProfile';
 import UserOptions from '../components/UserOptions';
 import { useSearchParams } from 'react-router-dom';
+import PostList from '../components/PostsList';
+import { getPosts } from '../features/posts/postActions';
 
 export default function User() {
   const dispatch = useAppDispatch();
@@ -15,6 +17,7 @@ export default function User() {
   const [searchParams] = useSearchParams();
   const [modalOpen, setModalOpen] = useState(false);
   const [profilePicModal, setProfilePicModal] = useState(false);
+  const { posts } = useAppSelector((state) => state.posts);
 
   const page = searchParams.get('page');
   let activePage;
@@ -26,7 +29,7 @@ export default function User() {
   } else if (page === 'settings') {
     activePage = 'Settings';
   } else {
-    activePage = undefined;
+    activePage = <PostList posts={posts} />;
   }
 
   const handleModalOpen = () => {
@@ -47,6 +50,7 @@ export default function User() {
 
   useEffect(() => {
     dispatch(getUser(userId._id));
+    dispatch(getPosts(userId._id));
   }, []);
 
   return (
@@ -62,7 +66,8 @@ export default function User() {
           openPicModal={handlePicModalOpen}
         />
         <div className="w-full">
-          <UserOptions page={page} />
+          <UserOptions page={page!} />
+          {activePage}
         </div>
       </div>
     </>

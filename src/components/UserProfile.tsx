@@ -25,7 +25,7 @@ export default function UserProfile({
   user,
 }: UserProfileProps) {
   return (
-    <div className="lg:w-1/4 md:w-2/6 w-full flex flex-col bg-white px-4 py-8  gap-6">
+    <div className="lg:w-1/4 md:w-2/6 w-full sticky flex flex-col bg-white px-4 py-8  gap-6 md:h-[80vh]">
       <div className="relative flex justify-center items-center">
         <img
           className="h-40 w-40 rounded-full transition-opacity duration-300 ease-in-out border-2 object-center "

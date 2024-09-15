@@ -16,7 +16,7 @@ export const getPosts = async (
 ): Promise<ApiResponse<Post[]>> => {
   let response;
   if (userId) {
-    response = await axiosInstance.get(`/posts/${userId}`);
+    response = await axiosInstance.get(`/posts?userId=${userId}`);
   } else {
     response = await axiosInstance.get(`/posts`);
   }
