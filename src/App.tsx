@@ -5,12 +5,12 @@ import 'react-toastify/ReactToastify.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
 import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
 import NewPassword from './pages/NewPassword';
+import User from './pages/User';
 
 // TODO change password field types
 
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/reset-password/:token" element={<NewPassword />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
-            <Route path="/user/:profileId" element={<UserProfile />} />
+            <Route path="/user/:profileId" element={<User />} />
           </Route>
         </Routes>
       </main>

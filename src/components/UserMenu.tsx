@@ -29,7 +29,7 @@ export default function UserMenu() {
         </h2>
         <MenuItem>
           <Link
-            to={`/user/${user?._id}`}
+            to={`/user/${user?._id}?page=posts`}
             className=" data-[focus]:bg-gray-200 px-2 w-full rounded-md flex items-center gap-2 py-2"
           >
             <div className="w-6 h-6 rounded-full">

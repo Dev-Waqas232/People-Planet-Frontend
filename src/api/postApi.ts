@@ -10,3 +10,15 @@ export const createPost = async (
   );
   return response.data;
 };
+
+export const getPosts = async (
+  userId?: string
+): Promise<ApiResponse<Post[]>> => {
+  let response;
+  if (userId) {
+    response = await axiosInstance.get(`/posts/${userId}`);
+  } else {
+    response = await axiosInstance.get(`/posts`);
+  }
+  return response.data;
+};
