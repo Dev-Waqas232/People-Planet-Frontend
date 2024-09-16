@@ -7,6 +7,7 @@ type initialState = {
   friendRequestsReceived: string[];
   friendRequestsSent: string[];
   friendSuggestions: User[];
+  user: User | null;
   loading: boolean;
   error: string | null;
 };
@@ -18,6 +19,7 @@ const initialState: initialState = {
   friends: [],
   friendSuggestions: [],
   loading: false,
+  user: null,
 };
 
 const friendsSlice = createSlice({
