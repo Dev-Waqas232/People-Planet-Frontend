@@ -9,6 +9,7 @@ import UserOptions from '../components/UserOptions';
 import { useSearchParams } from 'react-router-dom';
 import PostList from '../components/PostsList';
 import { getPosts } from '../features/posts/postActions';
+import Spinner from '../components/Spinner';
 
 export default function User() {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export default function User() {
   const [searchParams] = useSearchParams();
   const [modalOpen, setModalOpen] = useState(false);
   const [profilePicModal, setProfilePicModal] = useState(false);
-  const { posts } = useAppSelector((state) => state.posts);
+  const { posts, loading } = useAppSelector((state) => state.posts);
 
   const page = searchParams.get('page');
   let activePage;
@@ -67,7 +68,7 @@ export default function User() {
         />
         <div className="w-full">
           <UserOptions page={page!} />
-          {activePage}
+          {loading ? <Spinner /> : activePage}
         </div>
       </div>
     </>

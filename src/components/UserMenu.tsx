@@ -5,6 +5,8 @@ import { IoIosLogOut } from 'react-icons/io';
 import { useAppDispatch } from '../hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/authSlice';
+import { removeUser } from '../features/user/userSlice';
+
 export default function UserMenu() {
   const user = JSON.parse(localStorage.getItem('user') as string);
   const dispatch = useAppDispatch();
@@ -12,6 +14,7 @@ export default function UserMenu() {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(removeUser());
     navigate('/auth/login');
   };
 
@@ -21,7 +24,11 @@ export default function UserMenu() {
         <div className="w-9 h-9 rounded-full">
           <img
             className="object-fill object-center rounded-full w-9 h-9 "
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s"
+            src={
+              user.profilePicture
+                ? `http://localhost:5000/uploads/${user.profilePicture}`
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
+            }
             alt=""
           />
         </div>
@@ -35,7 +42,7 @@ export default function UserMenu() {
         </h2>
         <MenuItem>
           <Link
-            to={`/user/${user._id}?page=posts`}
+            to={`/user/${user?._id}?page=posts`}
             className=" data-[focus]:bg-gray-200 px-2 w-full rounded-md flex items-center gap-2 py-2"
           >
             <div className="w-6 h-6 rounded-full">

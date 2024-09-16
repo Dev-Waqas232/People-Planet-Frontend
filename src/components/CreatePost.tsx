@@ -5,7 +5,7 @@ type CreatePostProps = {
 };
 
 export default function CreatePost({ onClick }: CreatePostProps) {
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="bg-white px-4 py-3">

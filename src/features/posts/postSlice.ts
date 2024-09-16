@@ -24,7 +24,7 @@ const postSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createPost.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(
@@ -41,7 +41,7 @@ const postSlice = createSlice({
         toast.error(state.error);
       })
       .addCase(getPosts.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(
