@@ -9,7 +9,7 @@ type CreatePostModalProps = {
 
 export default function CreatePostModal({ closeModal }: CreatePostModalProps) {
   const { loading } = useAppSelector((state) => state.posts);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const [postImage, setPostImage] = useState<File | null>(null);
   const [content, setContent] = useState('');
   const dispatch = useAppDispatch();
