@@ -2,12 +2,18 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { IoSettings } from 'react-icons/io5';
 import { IoIosLogOut } from 'react-icons/io';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/authSlice';
 export default function UserMenu() {
-  const { user } = useAppSelector((state) => state.user);
+  const user = JSON.parse(localStorage.getItem('user') as string);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/auth/login');
+  };
 
   return (
     <Menu>
@@ -29,7 +35,7 @@ export default function UserMenu() {
         </h2>
         <MenuItem>
           <Link
-            to={`/user/${user?._id}?page=posts`}
+            to={`/user/${user._id}?page=posts`}
             className=" data-[focus]:bg-gray-200 px-2 w-full rounded-md flex items-center gap-2 py-2"
           >
             <div className="w-6 h-6 rounded-full">
@@ -53,7 +59,7 @@ export default function UserMenu() {
         </MenuItem>
         <MenuItem>
           <button
-            onClick={() => dispatch(logout())}
+            onClick={handleLogout}
             className=" data-[focus]:bg-gray-200 px-2 w-full rounded-md flex items-center gap-2  py-2"
           >
             <IoIosLogOut />
