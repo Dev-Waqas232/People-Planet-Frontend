@@ -65,7 +65,7 @@ export default function Friends() {
                     className="h-16 w-16 rounded-full transition-opacity duration-300 ease-in-out object-center "
                     src={
                       friend.profilePicture
-                        ? `http://localhost:5000/uploads/${friend.profilePicture}`
+                        ? `https://people-planet.onrender.com/uploads/${friend.profilePicture}`
                         : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
                     }
                     alt="Profile Picture"
@@ -113,7 +113,7 @@ export default function Friends() {
                     className="h-16 w-16 rounded-full transition-opacity duration-300 ease-in-out object-center "
                     src={
                       friend.profilePicture
-                        ? `http://localhost:5000/uploads/${friend.profilePicture}`
+                        ? `https://people-planet.onrender.com/uploads/${friend.profilePicture}`
                         : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
                     }
                     alt="Profile Picture"
@@ -156,7 +156,7 @@ export default function Friends() {
                     className="h-16 w-16 rounded-full transition-opacity duration-300 ease-in-out object-center "
                     src={
                       friend.profilePicture
-                        ? `http://localhost:5000/uploads/${friend.profilePicture}`
+                        ? `https://people-planet.onrender.com/uploads/${friend.profilePicture}`
                         : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
                     }
                     alt="Profile Picture"

@@ -31,7 +31,7 @@ export default function UserProfile({
           className="h-40 w-40 rounded-full transition-opacity duration-300 ease-in-out border-2 object-center "
           src={
             user?.profilePicture
-              ? `http://localhost:5000/uploads/${user.profilePicture}`
+              ? `https://people-planet.onrender.com/uploads/${user.profilePicture}`
               : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
           }
           alt="Profile Picture"

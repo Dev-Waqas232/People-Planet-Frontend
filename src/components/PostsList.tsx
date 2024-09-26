@@ -32,7 +32,7 @@ export default function PostList({ posts }: { posts: Post[] }) {
                 className="h-12 w-12 rounded-full transition-opacity duration-300 ease-in-out object-center border-2"
                 src={
                   post.createdBy.profilePicture
-                    ? `http://localhost:5000/uploads/${post.createdBy.profilePicture}`
+                    ? `https://people-planet.onrender.com/uploads/${post.createdBy.profilePicture}`
                     : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
                 }
                 alt="Profile Picture"
@@ -55,7 +55,7 @@ export default function PostList({ posts }: { posts: Post[] }) {
           <div className="mt-4 text-[15px] ">
             <p>{post.content}</p>
             <img
-              src={`http://localhost:5000/uploads/${post.image}`}
+              src={`https://people-planet.onrender.com/uploads/${post.image}`}
               alt=""
               className="py-4 px-5 w-full object-cover"
             />
