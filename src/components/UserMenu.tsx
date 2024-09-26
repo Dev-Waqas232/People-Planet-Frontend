@@ -25,8 +25,8 @@ export default function UserMenu() {
           <img
             className="object-fill object-center rounded-full w-9 h-9 "
             src={
-              user.profilePicture
-                ? `http://localhost:5000/uploads/${user.profilePicture}`
+              user?.profilePicture
+                ? `http://localhost:5000/uploads/${user?.profilePicture}`
                 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa6YvRump6DC1zR3Bu5fz9358Gcgviuu5nag&s'
             }
             alt=""
