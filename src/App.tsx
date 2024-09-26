@@ -11,11 +11,25 @@ import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
 import NewPassword from './pages/NewPassword';
 import User from './pages/User';
+import Friends from './pages/Friends';
+import { useEffect } from 'react';
+import { useAppDispatch } from './hooks';
+import { fetchFriends } from './features/friends/friendsActions';
 
 // TODO change password field types
 
 export default function App() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchData = () => {
+      dispatch(fetchFriends());
+    };
+    if (localStorage.getItem('token')) {
+      fetchData();
+    }
+  }, []);
 
   return (
     <>
@@ -34,6 +48,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/user/:profileId" element={<User />} />
+            <Route path="/friends" element={<Friends />} />
           </Route>
         </Routes>
       </main>

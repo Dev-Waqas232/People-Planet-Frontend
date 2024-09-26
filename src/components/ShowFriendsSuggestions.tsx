@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { suggestFriends } from '../features/friends/friendsActions';
+import {
+  sendRequest,
+  suggestFriends,
+} from '../features/friends/friendsActions';
 import Spinner from './Spinner';
+import { toast } from 'react-toastify';
+import { filterSuggestFriends } from '../features/friends/friendsSlice';
 
 export default function ShowFriendsSuggestions() {
   const dispatch = useAppDispatch();
@@ -14,6 +19,14 @@ export default function ShowFriendsSuggestions() {
   }, []);
 
   const handleProfileNavigation = (id: string) => {};
+
+  const addFriend = async (id: string) => {
+    const response = await dispatch(sendRequest(id));
+    if (sendRequest.fulfilled.match(response)) {
+      toast.success('Friend Request Send!');
+      dispatch(filterSuggestFriends(id));
+    }
+  };
 
   if (loading) {
     return <Spinner />;
@@ -43,7 +56,10 @@ export default function ShowFriendsSuggestions() {
               {friend.firstName} {friend.lastName}
             </p>
           </div>
-          <button className="bg-primary mt-4 py-2 rounded-md text-white">
+          <button
+            onClick={() => addFriend(friend._id!)}
+            className="bg-primary mt-4 py-2 rounded-md text-white"
+          >
             Add Friend
           </button>
         </div>

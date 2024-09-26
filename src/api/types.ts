@@ -37,3 +37,9 @@ export interface Post {
   createdAt: Date;
   comments: string[];
 }
+
+export interface Friends {
+  friends: User[];
+  friendRequestsSent: User[];
+  friendRequestsReceived: User[];
+}

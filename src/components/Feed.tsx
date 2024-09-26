@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getPosts } from '../features/posts/postActions';
 import Spinner from './Spinner';
+import { fetchFriends } from '../features/friends/friendsActions';
 
 export default function Feed() {
   const [openModal, setOpenModal] = useState(false);
@@ -27,6 +28,7 @@ export default function Feed() {
   useEffect(() => {
     if (location.pathname === '/') {
       dispatch(getPosts());
+      dispatch(fetchFriends());
     }
   }, [location, dispatch]);
 
