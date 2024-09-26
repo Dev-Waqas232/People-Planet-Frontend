@@ -18,7 +18,7 @@ export default function ShowFriendsSuggestions() {
     dispatch(suggestFriends());
   }, []);
 
-  const handleProfileNavigation = (id: string) => {};
+  // const handleProfileNavigation = (id: string) => {};
 
   const addFriend = async (id: string) => {
     const response = await dispatch(sendRequest(id));
@@ -51,7 +51,7 @@ export default function ShowFriendsSuggestions() {
             />
             <p
               className="cursor-pointer"
-              onClick={() => handleProfileNavigation(friend._id!)}
+              // onClick={() => handleProfileNavigation(friend._id!)}
             >
               {friend.firstName} {friend.lastName}
             </p>
