@@ -4,24 +4,24 @@ import { FaRegComment } from 'react-icons/fa';
 
 import { Post } from '../api/types';
 
+const formatDate = (date: Date) => {
+  const newDate = new Date(date);
+
+  const formattedDate = newDate.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+  });
+
+  const formattedTime = newDate.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
+  return `${formattedDate}, at ${formattedTime}`;
+};
+
 export default function PostList({ posts }: { posts: Post[] }) {
-  const formatDate = (date: Date) => {
-    const newDate = new Date(date);
-
-    const formattedDate = newDate.toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'long',
-    });
-
-    const formattedTime = newDate.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    });
-
-    return `${formattedDate}, at ${formattedTime}`;
-  };
-
   return (
     <div className="space-y-4 flex flex-col mt-4">
       {posts.map((post) => (

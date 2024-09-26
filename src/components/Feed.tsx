@@ -40,7 +40,13 @@ export default function Feed() {
         <Spinner />
       ) : (
         <div>
-          <PostList posts={posts} />
+          {posts.length > 0 ? (
+            <PostList posts={posts} />
+          ) : (
+            <div className="mt-4 text-gray-700">
+              <p>Please add more friends to see their posts.</p>
+            </div>
+          )}
         </div>
       )}
     </div>
